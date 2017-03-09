@@ -13,23 +13,26 @@ def make_scale( x, y, z ):
     smatrix[1][1] = y
     smatrix[2][2] = x
 
-def make_rotX( theta ):    
+def make_rotX( theta ):
+    th = theta*(math.pi/180)
     rmatrix = new_matrix()
     ident(rmatrix)
-    rmatrix[1] = [0,(math.cos(theta)),(math.sin(theta)),0]
-    rmatrix[2] = [0,(-math.sin(theta)),(math.cos(theta)),0]
+    rmatrix[1] = [0,(math.cos(th)),(math.sin(th)),0]
+    rmatrix[2] = [0,(-math.sin(th)),(math.cos(th)),0]
 
 def make_rotY( theta ):
+    th = theta*(math.pi/180)
     rmatrix = new_matrix()
     ident(rmatrix)
-    rmatrix[0] = [(math.cos(theta)),0,(-math.sin(theta)),0]
-    rmatrix[2] = [(math.sin(theta)),0,(math.cos(theta)),0]
+    rmatrix[0] = [(math.cos(th)),0,(-math.sin(th)),0]
+    rmatrix[2] = [(math.sin(th)),0,(math.cos(th)),0]
 
 def make_rotZ( theta ):
+    th = theta*(math.pi/180)
     rmatrix = new_matrix()
     ident(rmatrix)
-    rmatrix[0] = [(math.cos(theta)), (math.sin(theta)),0,0]
-    rmatrix[1] = [(-math.sin(theta)), (math.cos(theta)),0,0] 
+    rmatrix[0] = [(math.cos(th)), (math.sin(th)),0,0]
+    rmatrix[1] = [(-math.sin(th)), (math.cos(th)),0,0] 
 
 def print_matrix( matrix ):
     s = ''
