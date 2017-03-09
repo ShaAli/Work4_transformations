@@ -31,9 +31,53 @@ The file follows the following format:
 
 See the file script for an example of the file format
 """
-def parse_file( fname, points, transform, screen, color ):
+def parse_file( fname, edges, transform, screen, color ):
     f = open (fname, "r")
     script = f.read()
-    f.close()
+    tmatrix = transform
     print script
-
+    print "__________________"
+    scr = script.split("\n")
+    str = ""
+    for i in range(len(scr)):
+    	str += "["
+    	str += scr[i]
+    	str += "],"
+    print str
+    for i in range(len(scr)):
+    	if scr[i] == "line":
+    		n = scr[i+1].split(" ")
+    		add_edge(edges,int(n[0]),int(n[1]),int(n[2]),int(n[3]),int(n[4]),int(n[5]))
+		if scr[i] == "ident":
+			ident(tmatrix)
+		elif scr[i] == "scale":
+			n = scr[i+1].split(" ")
+			smatrix = make_scale(int(n[0]),int(n[1]),int(n[2]))
+			matrix_mult(smatrix,tmatrix)
+		elif scr[i] == "translate":
+			n = scr[i+1].split(" ")
+			tmat = make_translate(int(n[0]),int(n([1])),int(n[2]))
+			matrix_mult(tmat,tmatrix)
+        elif scr[i] == "rotate":
+        	n = scr[i+1].split(" ")
+        	if n[0] == "x":
+        	    rx = make_rotX(int(n[1]))
+        	    matrix_mult(rx, tmatrix)
+        	elif n[0] == "y":
+        	    ry = make_rotY(int(n[1]))
+        	    matrix_mult(ry, tmatrix)
+        	else:
+        	    rz = make_rotZ(int(n[1]))
+                matrix_mult(rz, tmatrix)
+        elif scr[i] == "apply":
+        	matrix_mult(tmatrix,edges)
+        elif scr[i] == "display":
+            draw_lines( edges, screen, color )
+            display(screen)
+        elif scr[i] == "save":
+        	fname = scr[i+1]
+        	draw_lines(edges, screen, color)
+        	save_extension(screen, fname)
+        elif scr[i] == "quit":
+        	f.close()
+        	exit
